@@ -4,6 +4,23 @@ Photoman::Application.routes.draw do
 
   resources :albums
 
+  match 'albums/:size(/:year)(/:event)(/:subdir)(/:subdir2)/:img.:ext'  => Dragonfly[:images].endpoint { |params, app|
+
+      filepath = '~/apps/photoman/albums/'
+      filepath << params[:year]     + '/' unless params[:year   ].blank?
+      filepath << params[:event]    + '/' unless params[:event  ].blank?
+      filepath << params[:subdir]   + '/' unless params[:subdir ].blank?
+      filepath << params[:subdir2]  + '/' unless params[:subdir2].blank?
+      filepath << "#{params[:img]}.#{params[:ext]}"
+
+      app.fetch_file(filepath).thumb("#{params[:size]}x#{params[:size]}#")
+
+      #another example of endpoint usage:
+        # Photo.find(params[:id]).image.thumb(params[:style]).encode(params[:format])
+
+  }
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
