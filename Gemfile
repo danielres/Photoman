@@ -48,3 +48,5 @@ group :test do
   gem "capybara"
   gem "guard-rspec"
 end
+
+gem 'simple_form'
