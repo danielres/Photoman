@@ -7,8 +7,8 @@ class HomeController < ApplicationController
     thumb_size = 100
 
     @years = Dir['albums/*/']
-
-    image_paths = Dir['albums/**/*.JPG'] + Dir['albums/**/*.jpg']
+    year = params[:year].presence || File.basename(@years.last)
+    image_paths = Dir["albums/#{year}/**/*.JPG"] + Dir["albums/#{year}/**/*.jpg"]
     @images = []
     image_paths.each{ |path|
       url               = File.new(path).path.split('/').insert(1, thumb_size).join('/')
