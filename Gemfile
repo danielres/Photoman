@@ -56,3 +56,5 @@ gem 'simple_form'
 
 gem 'exifr'
 gem 'xmp'
+
+gem 'fog'
