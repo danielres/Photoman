@@ -55,3 +55,4 @@ gem 'dragonfly', '~>0.9.10'
 gem 'simple_form'
 
 gem 'exifr'
+gem 'xmp'
