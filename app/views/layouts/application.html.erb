@@ -10,12 +10,29 @@
 <%= render :partial => 'menu' %>
 <%= yield %>
 
-<h2>Autoalbums (<%= @images.count %> photos) </h2>
+<p>
+  Top dirs:
+  <% @years.each do |y|  %>
+    <%= link_to y=File.basename(y), :year => y  %>
+  <% end %>
+</p>
+<p>
+  Groupings:
+  <% @grouping_list.each do |g| %>
+    <%= link_to g, :grouping => g %>
+  <% end %>
+</p>
+<h2>Autoalbums</h2>
 
-
-<% @images.each do |i| %>
-  <p><img src="<%= i[:url] %>" /><%= i[:meta] %></p>
-<% end %>
-
+<% @images.each do |grouping,images|  %>
+    <div class="images">
+      <h3><%= grouping %></h3>
+      <ul>
+        <% images.each do |i| %>
+          <li><img src="<%= i[:url] %>" /></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 </body>
 </html>
