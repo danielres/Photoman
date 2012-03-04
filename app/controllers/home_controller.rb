@@ -45,5 +45,18 @@ class HomeController < ApplicationController
     @images = @images_by_albums
     @images = @images_by_tags   if  params[:grouping] == 'tags'
 
+    storage_mode = 'S3'
+
+    if storage_mode == 'S3'
+        connection  = Fog::Storage.new({
+                        :provider => 'AWS',
+                        :aws_access_key_id => ENV['S3_KEY'],
+                        :aws_secret_access_key => ENV['S3_SECRET']
+                      })
+        expiration  = 1.year
+        files       = connection.directories.get(ENV['S3_BUCKET']).files
+        urls        = files.map{|f| f.url(  (Time.now + expiration).to_i  )}
+    end
+
   end
 end
