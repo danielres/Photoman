@@ -2,7 +2,6 @@ require 'find'
 
 class HomeController < ApplicationController
   def index
-    @albums = Album.all
 
     thumb_size = 100
 
