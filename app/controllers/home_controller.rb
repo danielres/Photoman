@@ -12,18 +12,36 @@ class HomeController < ApplicationController
 
     thumb_size = 100
     image_paths = Dir['albums/**/*.JPG'] + Dir['albums/**/*.jpg']
-
     @images = []
-    image_paths.each{|path|
-      url   = File.new(path).path.split('/').insert(1, thumb_size).join('/')
-      exif  = {}
-      e     = EXIFR::JPEG.new(path)
-      exif[:model] = e.model
-      exif[:date_time] = e.date_time
-      exif[:width] = e.width
-      exif[:height] = e.height
-      @images << { :path => path, :url => url, :exif => exif }
+    image_paths.each{ |path|
+      url               = File.new(path).path.split('/').insert(1, thumb_size).join('/')
+      meta              = {}
+      e                 = EXIFR::JPEG.new(path)
+      xmp               = XMP.parse(e)
+      meta[:model]      = e.model
+      meta[:date_time]  = e.date_time
+      meta[:width]      = e.width
+      meta[:height]     = e.height
+      meta[:tags]       = xmp.dc.subject rescue []
+      @images << { :path => path, :url => url, :meta => meta }
     }
+
+#    testimage = EXIFR::JPEG.new('albums/2002-09-19 16-07-31 moustique 03.JPG')
+#    xmp = XMP.parse(testimage)
+
+
+#    attrs = []
+#    xmp.namespaces.each{ |ns|
+#      namespace = xmp.send(ns)
+#      namespace.attributes.each{ |attr|
+#        attrs << "#{ns}.#{attr}: " + namespace.send(attr).inspect
+#      }
+#    }
+
+
+
+
+
 
     #    @thumbs = jpgs.map{ |i| File.new(i).path.split('/').insert(1, thumb_size).join('/') }
 
