@@ -10,5 +10,12 @@
 <%= render :partial => 'menu' %>
 <%= yield %>
 
+<h2>Autoalbums (<%= @images.count %> photos) </h2>
+
+
+<% @images.each do |i| %>
+  <p><img src="<%= i[:url] %>" /><%= i[:exif] %></p>
+<% end %>
+
 </body>
 </html>
