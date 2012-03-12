@@ -1,12 +1,17 @@
+<%
+  display_modes ||=   ['albums', 'tags']
+%>
+
 <p>
   Years:
-  <% @years.each do |y|  %>
-    <%= link_to y=File.basename(y), :year => y  %>
+  <% dir_subdirs.each do |d|  %>
+    <% d.sub!('/','') %>
+    <%= link_to d, :prefix => d  %>
   <% end %>
 </p>
 <p>
-  Groupings:
-  <% @grouping_list.each do |g| %>
+  Display:
+  <% display_modes.each do |g| %>
     <%= link_to g, :grouping => g %>
   <% end %>
 </p>
