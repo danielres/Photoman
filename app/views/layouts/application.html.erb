@@ -10,19 +10,51 @@
 
 <%= render :partial => 'menu' %>
 
-<%= yield %>
+<h2><%= params[:year] %></h2>
 
-<h2>Autoalbums</h2>
 
-<% @images.each do |grouping,images|  %>
-    <div class="images">
-      <h3><%= grouping %></h3>
-      <ul>
-        <% images.each do |i| %>
-          <li><img src="<%= i[:url] %>" /></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<% if false && images = images(:year=>params[:year]).presence %>
+  <div class='images'>
+    <ul>
+      <% images.each do |i| %>
+        <li><%= link_to( image_tag(thumb_url(i)), thumb_url(i,'500x500') )  %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<h2><%= params[:prefix] %></h2>
+
+<% if s = dir_subdirs(:prefix => params[:prefix]).presence %>
+  <h3>Subdirs</h3>
+  <ul>
+    <% s.each do |d| %>
+        <li><%= link_to d, d %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+<% if images = dir_images(:prefix => params[:prefix].to_s+"/").presence %>
+  <h3>Dir images</h3>
+  <ul class='images'>
+    <% images.each do |i| %>
+      <% remote_url = Dragonfly[:images].remote_url_for(i.imagefile.uid) %>
+      <% filename   = remote_url.split('/').last %>
+      <li title="<%= filename %>"><%= link_to( image_tag(thumb_url(i)), thumb_url(i, "500x500#") )  %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+<% if contents = dir_contents(:prefix => params[:prefix].to_s+"/").presence %>
+  <h3>Dir contents</h3>
+  <ul>
+    <% contents.each do |f| %>
+          <li><%= link_to f, Dragonfly[:images].remote_url_for(f)  %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 </body>
 </html>
