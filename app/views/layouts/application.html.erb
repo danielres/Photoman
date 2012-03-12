@@ -39,7 +39,7 @@
     <h3>Subdirs</h3>
     <ul>
       <% s.each do |d| %>
-          <li><%= link_to d, d %></li>
+          <li><%= link_to d, '/'+d %></li>
       <% end %>
     </ul>
   <% end %>
@@ -51,7 +51,7 @@
       <% images.each do |i| %>
         <% remote_url = Dragonfly[:images].remote_url_for(i.imagefile.uid) %>
         <% filename   = remote_url.split('/').last %>
-        <li title="<%= filename %>"><%= link_to( image_tag(thumb_url(i)), thumb_url(i, "500x500#") )  %></li>
+        <li title="<%= filename %>"><%= link_to( image_tag(thumb_url(i)), thumb_url(i, "500x500") )  %></li>
       <% end %>
     </ul>
   <% end %>
