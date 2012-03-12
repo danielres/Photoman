@@ -58,3 +58,4 @@ gem 'exifr'
 gem 'xmp'
 
 gem 'fog'
+gem 'right_aws'
