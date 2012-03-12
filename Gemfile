@@ -59,3 +59,5 @@ gem 'xmp'
 
 gem 'fog'
 gem 'right_aws'
+
+gem 'devise'

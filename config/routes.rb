@@ -1,5 +1,7 @@
 Photoman::Application.routes.draw do
 
+  devise_for :users
+
   match ':prefix' => 'home#index', :constraints => {:prefix => /.*/}
 
 
