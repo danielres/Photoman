@@ -2,6 +2,7 @@ Photoman::Application.routes.draw do
 
   devise_for :users
 
+  match 'show/:image_url' => 'images#show', :constraints => { :image_url => /.*/}
   match ':prefix' => 'home#index', :constraints => {:prefix => /.*/}
 
 
