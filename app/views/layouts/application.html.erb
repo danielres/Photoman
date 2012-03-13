@@ -44,6 +44,31 @@
     </ul>
   <% end %>
 
+  <% if videos = dir_videos(:prefix => params[:prefix].to_s+"/").presence %>
+
+	  <script type="text/javascript" src="/javascripts/jwplayer/jwplayer.js"></script>
+
+    <h3>Videos</h3>
+      <div id="jwplayer">JW Player goes here</div>
+
+	      <script type="text/javascript">
+          jwplayer("jwplayer").setup({
+              flashplayer: "/javascripts/jwplayer/player.swf",
+              playlist: [
+                <% videos.each do |i| %>
+                  <% remote_url = Dragonfly[:images].remote_url_for(i.imagefile.uid) %>
+                  <% filename   = remote_url.split('/').last %>
+                  { file: "<%= i.imagefile.url + '/' + filename %>", title: "<%= filename %>" },
+                <% end %>
+              ],
+              "playlist.position": "right",
+              "playlist.size": 260,
+              width: 320+260,
+              height: 240
+          });
+	      </script>
+
+  <% end %>
 
   <% if images = dir_images(:prefix => params[:prefix].to_s+"/").presence %>
     <h3>Dir images</h3>

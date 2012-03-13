@@ -62,6 +62,19 @@ def dir_images( options = {} )
   images
 end
 
+def dir_videos( options = {} )
+
+  images ||=   []
+  dir_contents(options).each{  |f|
+    if  ( i = Image.new ) &&
+        ( i.imagefile = Dragonfly[:images].fetch(f) ) &&
+        ( f.include?('.m4v') || f.include?('.MOV') || f.include?('.mov') || f.include?('.avi') || f.include?('.AVI')  )
+        images  <<  i
+    end
+  }
+  images
+end
+
 #def s3_files
 #  Dragonfly[:images].datastore.storage.directories.get(ENV['S3_BUCKET']).files
 #end
