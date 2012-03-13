@@ -44,6 +44,16 @@
     </ul>
   <% end %>
 
+  <% if videos = dir_videos(:prefix => params[:prefix].to_s+"/").presence %>
+    <h3>Dir videos</h3>
+    <ul class='videos'>
+      <% videos.each do |i| %>
+        <% remote_url = Dragonfly[:images].remote_url_for(i.imagefile.uid) %>
+        <% filename   = remote_url.split('/').last %>
+        <li title="<%= filename %>"> <%= video_tag i.imagefile.url, :size => "320x240", :controls => true %></li>
+      <% end %>
+    </ul>
+  <% end %>
 
   <% if images = dir_images(:prefix => params[:prefix].to_s+"/").presence %>
     <h3>Dir images</h3>

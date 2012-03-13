@@ -32,6 +32,19 @@ def dir_contents( options = {} )
   end
 end
 
+def dir_videos( options = {} )
+
+  images ||=   []
+  dir_contents(options).each{  |f|
+    if  ( i = Image.new ) &&
+        ( i.imagefile = Dragonfly[:images].fetch(f) ) &&
+        ( f.include?('.MOV') || f.include?('.mov')   || f.include?('.avi')   || f.include?('.AVI') || f.include?('.m4v')  )
+        images  <<  i
+    end
+  }
+  images
+end
+
 def dir_images( options = {} )
 
   images ||=   []
